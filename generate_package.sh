@@ -2,7 +2,7 @@
 
 BASE_PWD=$(dirname "$(readlink -f "$0")")
 KUESA_TOOLS_DIR=$BASE_PWD/addons/
-KUESA_EXPORTER_DIR=$BASE_PWD/addons/kuesa_exporter/glTF-Blender-Exporter/scripts/addons/
+KUESA_EXPORTER_DIR=$BASE_PWD/addons/kuesa_exporter/2.79/glTF-Blender-Exporter/scripts/addons/
 DATE_STR=$(date "+%d_%m_%y")
 GIT_VERSION=$(git describe --tags)
 
