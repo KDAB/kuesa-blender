@@ -1,0 +1,10 @@
+.git
+.project
+.idea
+.pydevproject
+__pycache__
+docs
+misc
+
+node_modules
+/tests_out
