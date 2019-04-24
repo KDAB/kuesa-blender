@@ -13,12 +13,12 @@
 # limitations under the License.
 
 bl_info = {
-    'name': 'glTF 2.0 format',
-    'author': 'Julien Duroure, Norbert Nopper, Urs Hanselmann, Moritz Becher, Benjamin Schmithüsen, Jim Eckerlein, and many external contributors',
+    'name': 'KDAB Kuesa glTF 2.0 format',
+    'author': 'Julien Duroure, Norbert Nopper, Urs Hanselmann, Moritz Becher, Benjamin Schmithüsen, Jim Eckerlein, KDAB, and many external contributors',
     "version": (0, 9, 24),
     'blender': (2, 80, 0),
     'location': 'File > Import-Export',
-    'description': 'Import-Export as glTF 2.0',
+    'description': 'Import-Export as KDAB Kuesa glTF 2.0',
     'warning': '',
     'wiki_url': "https://docs.blender.org/manual/en/dev/addons/io_gltf2.html",
     'tracker_url': "https://github.com/KhronosGroup/glTF-Blender-IO/issues/",
@@ -490,7 +490,7 @@ class ExportGLTF2(bpy.types.Operator, ExportGLTF2_Base, ExportHelper):
 
 
 def menu_func_export(self, context):
-    self.layout.operator(ExportGLTF2.bl_idname, text='glTF 2.0 (.glb/.gltf)')
+    self.layout.operator(ExportGLTF2.bl_idname, text='KDAB Kuesa glTF 2.0 (.glb/.gltf)')
 
 
 class ImportGLTF2(Operator, ImportHelper):
@@ -568,7 +568,7 @@ class ImportGLTF2(Operator, ImportHelper):
 
 
 def menu_func_import(self, context):
-    self.layout.operator(ImportGLTF2.bl_idname, text='glTF 2.0 (.glb/.gltf)')
+    self.layout.operator(ImportGLTF2.bl_idname, text='KDAB Kuesa glTF 2.0 (.glb/.gltf)')
 
 
 classes = (
