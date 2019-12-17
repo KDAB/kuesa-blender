@@ -25,34 +25,48 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import bpy
-from . import Layers
+from .Layers.KDAB_kuesa_layers import KDAB_kuesa_layers_properties, GLTF_PT_KDAB_kuesa_layers
 
 bl_info = {
     "name": "KDAB - Kuesa Tools For Blender",
-    "author": "Timo Buske <timo.buske@kdab.com>",
+    "author": "Timo Buske <timo.buske@kdab.com>, Juan Casafranca <juan.casafranca@kdab.com>",
     "version": (0, 0, 1),
-    "blender": (2, 7, 9),
+    "blender": (2, 80, 0),
     "description": "KDAB - Kuesa Tools For Blender",
     "category": "All"
 }
 
-class KuesaPropertyGroup (bpy.types.PropertyGroup):
-        # main Kuesa property group
-        # this keeps the blender ui clean as we can just drop
-        # all later property groups in here
-        layers = bpy.props.CollectionProperty(type=Layers.blender.KuesaLayerPropertyGroup)
+
+glTF2ExportUserExtensions = [Layers.KDAB_kuesa_layers.KDAB_kuesa_layers]
+
 
 def register():
     # Register layer classes with Blender
-    Layers.blender.register()
-    bpy.utils.register_class(KuesaPropertyGroup)
-    bpy.types.Object.kuesa = bpy.props.PointerProperty(type=KuesaPropertyGroup)
+    bpy.utils.register_class(KDAB_kuesa_layers_properties)
+    bpy.types.Scene.KDAB_kuesa_layers_properties = bpy.props.PointerProperty(type=KDAB_kuesa_layers_properties)
+
+
+def register_panel():
+    try:
+        bpy.utils.register_class(GLTF_PT_KDAB_kuesa_layers)
+    except Exception:
+        pass
+
+    return unregister_panel
+
 
 def unregister():
-    del bpy.types.Object.kuesa
-    bpy.utils.unregister_class(KuesaPropertyGroup)
-    # Unregister layer classes with Blender
-    Layers.blender.unregister()
+    unregister_panel()
+    bpy.utils.unregister_class(KDAB_kuesa_layers_properties)
+    del bpy.types.Scene.KDAB_kuesa_layers_properties
+
+
+def unregister_panel():
+    # Since panel is registered on demand, it is possible it is not registered
+    try:
+        bpy.utils.unregister_class(GLTF_PT_KDAB_kuesa_layers)
+    except Exception:
+        pass
 
 if __name__ == "__main__":
     register()
