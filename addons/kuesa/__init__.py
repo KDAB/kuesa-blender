@@ -26,6 +26,7 @@
 
 import bpy
 from .Layers.KDAB_kuesa_layers import KDAB_kuesa_layers_properties, GLTF_PT_KDAB_kuesa_layers
+from .materials.KDAB_custom_materials import KDAB_custom_materials_properties, GLTF_PT_KDAB_custom_materials, register_KDAB_custom_materials, unregister_KDAB_custom_materials
 
 bl_info = {
     "name": "KDAB - Kuesa Tools For Blender",
@@ -37,18 +38,23 @@ bl_info = {
 }
 
 
-glTF2ExportUserExtensions = [Layers.KDAB_kuesa_layers.KDAB_kuesa_layers]
+glTF2ExportUserExtensions = [Layers.KDAB_kuesa_layers.KDAB_kuesa_layers,
+                             materials.KDAB_custom_materials.KDAB_custom_materials]
 
 
 def register():
+    print("Register")
     # Register layer classes with Blender
     bpy.utils.register_class(KDAB_kuesa_layers_properties)
     bpy.types.Scene.KDAB_kuesa_layers_properties = bpy.props.PointerProperty(type=KDAB_kuesa_layers_properties)
+
+    register_KDAB_custom_materials()
 
 
 def register_panel():
     try:
         bpy.utils.register_class(GLTF_PT_KDAB_kuesa_layers)
+        bpy.utils.register_class(GLTF_PT_KDAB_custom_materials)
     except Exception:
         pass
 
@@ -59,12 +65,14 @@ def unregister():
     unregister_panel()
     bpy.utils.unregister_class(KDAB_kuesa_layers_properties)
     del bpy.types.Scene.KDAB_kuesa_layers_properties
+    unregister_KDAB_custom_materials()
 
 
 def unregister_panel():
     # Since panel is registered on demand, it is possible it is not registered
     try:
         bpy.utils.unregister_class(GLTF_PT_KDAB_kuesa_layers)
+        bpy.utils.unregister_class(GLTF_PT_KDAB_custom_materials)
     except Exception:
         pass
 
