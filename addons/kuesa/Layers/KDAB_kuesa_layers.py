@@ -27,7 +27,7 @@
 import bpy
 
 bl_info = {
-    "name": "KDAB_kuesa_Layers",
+    "name": "KDAB_kuesa_layers",
     "category": "glTF 2.0 Extension",
     "blender": (2,80,0),
     'isDraft': False,
