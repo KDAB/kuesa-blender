@@ -49,11 +49,11 @@ class IroDiffuse(bpy.types.ShaderNodeCustomGroup):
         node_tree=bpy.data.node_groups.new('.' + self.bl_name, 'ShaderNodeTree')
 
         # Create node interface
-        node_tree.inputs.new("NodeSocketVector", "Iro Factor")
-        node_tree.inputs.new("NodeSocketVector", "Iro Disturb XY")
-        node_tree.inputs.new("NodeSocketFloat", "Iro Gain")
-        node_tree.inputs.new("NodeSocketColor", "Iro Inner Filter")
-        node_tree.inputs.new("NodeSocketColor", "Iro Outer Filter")
+        node_tree.inputs.new("NodeSocketVector", "Normal Scaling")
+        node_tree.inputs.new("NodeSocketVector", "Normal Disturb")
+        node_tree.inputs.new("NodeSocketFloat", "Reflection Gain")
+        node_tree.inputs.new("NodeSocketColor", "Reflection Inner Filter")
+        node_tree.inputs.new("NodeSocketColor", "Reflection Outer Filter")
         node_tree.inputs.new("NodeSocketFloat", "Diffuse Gain")
         node_tree.inputs.new("NodeSocketColor", "Diffuse Inner Filter")
         node_tree.inputs.new("NodeSocketColor", "Diffuse Outer Filter")
@@ -65,27 +65,27 @@ class IroDiffuse(bpy.types.ShaderNodeCustomGroup):
         gi = node_tree.nodes.new('NodeGroupInput')
         go = node_tree.nodes.new('NodeGroupOutput')
 
-        node_tree.inputs["Iro Factor"].default_value[0] = 1
-        node_tree.inputs["Iro Factor"].default_value[1] = 1
-        node_tree.inputs["Iro Factor"].default_value[2] = 1
-        node_tree.inputs["Iro Gain"].default_value = 1
-        node_tree.inputs["Iro Inner Filter"].default_value[0] = 1
-        node_tree.inputs["Iro Inner Filter"].default_value[1] = 1
-        node_tree.inputs["Iro Inner Filter"].default_value[2] = 1
-        node_tree.inputs["Iro Inner Filter"].default_value[3] = 1
-        node_tree.inputs["Iro Outer Filter"].default_value[0] = 1
-        node_tree.inputs["Iro Outer Filter"].default_value[1] = 1
-        node_tree.inputs["Iro Outer Filter"].default_value[2] = 1
-        node_tree.inputs["Iro Outer Filter"].default_value[3] = 1
+        node_tree.inputs["Normal Scaling"].default_value[0] = 1
+        node_tree.inputs["Normal Scaling"].default_value[1] = 1
+        node_tree.inputs["Normal Scaling"].default_value[2] = 1
+        node_tree.inputs["Reflection Gain"].default_value = 1
+        node_tree.inputs["Reflection Inner Filter"].default_value[0] = 1
+        node_tree.inputs["Reflection Inner Filter"].default_value[1] = 1
+        node_tree.inputs["Reflection Inner Filter"].default_value[2] = 1
+        node_tree.inputs["Reflection Inner Filter"].default_value[3] = 1
+        node_tree.inputs["Reflection Outer Filter"].default_value[0] = 1
+        node_tree.inputs["Reflection Outer Filter"].default_value[1] = 1
+        node_tree.inputs["Reflection Outer Filter"].default_value[2] = 1
+        node_tree.inputs["Reflection Outer Filter"].default_value[3] = 1
         node_tree.inputs["Diffuse Gain"].default_value = 1
-        node_tree.inputs["Iro Inner Filter"].default_value[0] = 1
-        node_tree.inputs["Iro Inner Filter"].default_value[1] = 1
-        node_tree.inputs["Iro Inner Filter"].default_value[2] = 1
-        node_tree.inputs["Iro Inner Filter"].default_value[3] = 1
-        node_tree.inputs["Iro Outer Filter"].default_value[0] = 1
-        node_tree.inputs["Iro Outer Filter"].default_value[1] = 1
-        node_tree.inputs["Iro Outer Filter"].default_value[2] = 1
-        node_tree.inputs["Iro Outer Filter"].default_value[3] = 1
+        node_tree.inputs["Diffuse Inner Filter"].default_value[0] = 1
+        node_tree.inputs["Diffuse Inner Filter"].default_value[1] = 1
+        node_tree.inputs["Diffuse Inner Filter"].default_value[2] = 1
+        node_tree.inputs["Diffuse Inner Filter"].default_value[3] = 1
+        node_tree.inputs["Diffuse Outer Filter"].default_value[0] = 1
+        node_tree.inputs["Diffuse Outer Filter"].default_value[1] = 1
+        node_tree.inputs["Diffuse Outer Filter"].default_value[2] = 1
+        node_tree.inputs["Diffuse Outer Filter"].default_value[3] = 1
         node_tree.inputs["Post Vertex Color"].default_value = 0
         node_tree.inputs["Post Gain"].default_value = 1
 
@@ -131,20 +131,20 @@ class IroDiffuse(bpy.types.ShaderNodeCustomGroup):
         multiply_post_vertex_color.operation = 'MULTIPLY'
 
         # Create links
-        node_tree.links.new(gi.outputs["Iro Factor"], iro_normal_node.inputs["Iro Factor"])
-        node_tree.links.new(gi.outputs["Iro Disturb XY"], iro_normal_node.inputs["Iro Disturb XY"])
+        node_tree.links.new(gi.outputs["Normal Scaling"], iro_normal_node.inputs["Normal Scaling"])
+        node_tree.links.new(gi.outputs["Normal Disturb"], iro_normal_node.inputs["Normal Disturb"])
         node_tree.links.new(iro_normal_node.outputs["Normal"], iro_fresnel_node.inputs["Normal"])
         node_tree.links.new(iro_normal_node.outputs["Normal"], iro_s_node.inputs["Normal"])
         node_tree.links.new(iro_s_node.outputs["Environment UV"], env_texture.inputs["Vector"])
         node_tree.links.new(iro_fresnel_node.outputs["Fresnel Factor"], mix_diffuse_node.inputs[0])
-        node_tree.links.new(gi.outputs["Iro Inner Filter"], mix_env_node.inputs[1])
-        node_tree.links.new(gi.outputs["Iro Outer Filter"], mix_env_node.inputs[2])
+        node_tree.links.new(gi.outputs["Reflection Inner Filter"], mix_env_node.inputs[1])
+        node_tree.links.new(gi.outputs["Reflection Outer Filter"], mix_env_node.inputs[2])
         node_tree.links.new(iro_fresnel_node.outputs["Fresnel Factor"], mix_env_node.inputs[0])
         node_tree.links.new(gi.outputs["Diffuse Inner Filter"], mix_diffuse_node.inputs[1])
         node_tree.links.new(gi.outputs["Diffuse Outer Filter"], mix_diffuse_node.inputs[2])
-        node_tree.links.new(gi.outputs["Iro Gain"], env_gain_vector_node.inputs[0])
-        node_tree.links.new(gi.outputs["Iro Gain"], env_gain_vector_node.inputs[1])
-        node_tree.links.new(gi.outputs["Iro Gain"], env_gain_vector_node.inputs[2])
+        node_tree.links.new(gi.outputs["Reflection Gain"], env_gain_vector_node.inputs[0])
+        node_tree.links.new(gi.outputs["Reflection Gain"], env_gain_vector_node.inputs[1])
+        node_tree.links.new(gi.outputs["Reflection Gain"], env_gain_vector_node.inputs[2])
         node_tree.links.new(gi.outputs["Diffuse Gain"], diffuse_gain_vector_node.inputs[0])
         node_tree.links.new(gi.outputs["Diffuse Gain"], diffuse_gain_vector_node.inputs[1])
         node_tree.links.new(gi.outputs["Diffuse Gain"], diffuse_gain_vector_node.inputs[2])

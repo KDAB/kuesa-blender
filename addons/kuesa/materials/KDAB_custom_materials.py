@@ -143,25 +143,25 @@ class KDAB_custom_materials:
                     )
 
     def iro_diffuse_extension(self, node, export_settings):
-        iroDisturb = node.inputs['Iro Disturb XY'].default_value
-        iroFactor = node.inputs['Iro Factor'].default_value
-        iroInnerFilter = node.inputs['Iro Inner Filter'].default_value
-        iroOuterFilter = node.inputs['Iro Outer Filter'].default_value
+        normalDisturb = node.inputs['Normal Disturb'].default_value
+        normalScaling = node.inputs['Normal Scaling'].default_value
+        reflectionInnerFilter = node.inputs['Reflection Inner Filter'].default_value
+        reflectionOuterFilter = node.inputs['Reflection Outer Filter'].default_value
         diffuseInnerFilter = node.inputs['Diffuse Inner Filter'].default_value
         diffuseOuterFilter = node.inputs['Diffuse Outer Filter'].default_value
 
         properties = {}
         # The texture is designed to match normals in blender. We need to match the rotation applied!
         if export_settings['gltf_yup']:
-            properties["iroFactor"] = [iroFactor[0], -iroFactor[2], iroFactor[1]]
+            properties["normalScaling"] = [normalScaling[0], -normalScaling[2], normalScaling[1]]
         else:
-            properties["iroFactor"] = [iroFactor[0], iroFactor[1], iroFactor[2]]
-        properties["iroDisturbXY"] = [iroDisturb[0], iroDisturb[1]]
+            properties["normalScaling"] = [normalScaling[0], normalScaling[1], normalScaling[2]]
+        properties["normalDisturb"] = [normalDisturb[0], normalDisturb[1]]
         properties["postVertexColor"] = node.inputs['Post Vertex Color'].default_value
         properties["postGain"] = node.inputs['Post Gain'].default_value
-        properties["iroGain"] = node.inputs["Iro Gain"].default_value
-        properties["iroInnerFilter"] = [iroInnerFilter[0], iroInnerFilter[1], iroInnerFilter[2]]
-        properties["iroOuterFilter"] = [iroOuterFilter[0], iroOuterFilter[1], iroOuterFilter[2]]
+        properties["reflectionGain"] = node.inputs["Reflection Gain"].default_value
+        properties["reflectionInnerFilter"] = [reflectionInnerFilter[0], reflectionInnerFilter[1], reflectionInnerFilter[2]]
+        properties["reflectionOuterFilter"] = [reflectionOuterFilter[0], reflectionOuterFilter[1], reflectionOuterFilter[2]]
         properties["diffuseInnerFilter"] = [diffuseInnerFilter[0], diffuseInnerFilter[1], diffuseInnerFilter[2]]
         properties["diffuseOuterFilter"] = [diffuseOuterFilter[0], diffuseOuterFilter[1], diffuseOuterFilter[2]]
         properties["diffuseGain"] = node.inputs["Diffuse Gain"].default_value
@@ -170,7 +170,7 @@ class KDAB_custom_materials:
         if env.image is not None:
             env_socket = env.outputs["Color"].links[0].to_socket
             env_info = self.gather_texture_info((env_socket,), export_settings)
-            properties["swatchMap"] = env_info
+            properties["reflectionMap"] = env_info
 
         diffuseTexture = node.node_tree.nodes["DiffuseTexture"]
         if diffuseTexture.image is not None:

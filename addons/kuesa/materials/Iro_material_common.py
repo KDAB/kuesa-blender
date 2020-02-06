@@ -34,8 +34,8 @@ class IroNormal(bpy.types.ShaderNodeCustomGroup):
     def init(self, context):
         node_tree=bpy.data.node_groups.new('.' + self.bl_name, 'ShaderNodeTree')
 
-        node_tree.inputs.new("NodeSocketVector", "Iro Factor")
-        node_tree.inputs.new("NodeSocketVector", "Iro Disturb XY")
+        node_tree.inputs.new("NodeSocketVector", "Normal Scaling")
+        node_tree.inputs.new("NodeSocketVector", "Normal Disturb")
 
         node_tree.outputs.new("NodeSocketVector", "Normal")
 
@@ -74,8 +74,8 @@ class IroNormal(bpy.types.ShaderNodeCustomGroup):
         node_tree.links.new(geometry_node.outputs['Normal'], vector_transform.inputs[0])
         node_tree.links.new(vector_transform.outputs[0], invert_z_component_node.inputs[0])
         node_tree.links.new(invert_z_component_node.outputs[0], scale_by_factor_node.inputs[0])
-        node_tree.links.new(gi.outputs["Iro Factor"], scale_by_factor_node.inputs[1])
-        node_tree.links.new(gi.outputs["Iro Disturb XY"], remove_z_component_node.inputs[0])
+        node_tree.links.new(gi.outputs["Normal Scaling"], scale_by_factor_node.inputs[1])
+        node_tree.links.new(gi.outputs["Normal Disturb"], remove_z_component_node.inputs[0])
         node_tree.links.new(scale_by_factor_node.outputs[0], add_normal_and_disturb.inputs[0])
         node_tree.links.new(remove_z_component_node.outputs[0], add_normal_and_disturb.inputs[1])
         node_tree.links.new(add_normal_and_disturb.outputs[0], normalize_result.inputs[0])

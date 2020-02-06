@@ -50,11 +50,11 @@ class IroDiffuseHemi(bpy.types.ShaderNodeCustomGroup):
         node_tree=bpy.data.node_groups.new('.' + self.bl_name, 'ShaderNodeTree')
 
         # Create node interface
-        node_tree.inputs.new("NodeSocketVector", "Iro Factor")
-        node_tree.inputs.new("NodeSocketVector", "Iro Disturb XY")
-        node_tree.inputs.new("NodeSocketFloat", "Iro Gain")
-        node_tree.inputs.new("NodeSocketColor", "Iro Inner Filter")
-        node_tree.inputs.new("NodeSocketColor", "Iro Outer Filter")
+        node_tree.inputs.new("NodeSocketVector", "Normal Scaling")
+        node_tree.inputs.new("NodeSocketVector", "Normal Disturb")
+        node_tree.inputs.new("NodeSocketFloat", "Reflection Gain")
+        node_tree.inputs.new("NodeSocketColor", "Reflection Inner Filter")
+        node_tree.inputs.new("NodeSocketColor", "Reflection Outer Filter")
         node_tree.inputs.new("NodeSocketFloat", "Diffuse Gain")
         node_tree.inputs.new("NodeSocketColor", "Diffuse Inner Filter")
         node_tree.inputs.new("NodeSocketColor", "Diffuse Outer Filter")
@@ -67,27 +67,27 @@ class IroDiffuseHemi(bpy.types.ShaderNodeCustomGroup):
         gi = node_tree.nodes.new('NodeGroupInput')
         go = node_tree.nodes.new('NodeGroupOutput')
 
-        node_tree.inputs["Iro Factor"].default_value[0] = 1
-        node_tree.inputs["Iro Factor"].default_value[1] = 1
-        node_tree.inputs["Iro Factor"].default_value[2] = 1
-        node_tree.inputs["Iro Gain"].default_value = 1
-        node_tree.inputs["Iro Inner Filter"].default_value[0] = 1
-        node_tree.inputs["Iro Inner Filter"].default_value[1] = 1
-        node_tree.inputs["Iro Inner Filter"].default_value[2] = 1
-        node_tree.inputs["Iro Inner Filter"].default_value[3] = 1
-        node_tree.inputs["Iro Outer Filter"].default_value[0] = 1
-        node_tree.inputs["Iro Outer Filter"].default_value[1] = 1
-        node_tree.inputs["Iro Outer Filter"].default_value[2] = 1
-        node_tree.inputs["Iro Outer Filter"].default_value[3] = 1
+        node_tree.inputs["Normal Scaling"].default_value[0] = 1
+        node_tree.inputs["Normal Scaling"].default_value[1] = 1
+        node_tree.inputs["Normal Scaling"].default_value[2] = 1
+        node_tree.inputs["Reflection Gain"].default_value = 1
+        node_tree.inputs["Reflection Inner Filter"].default_value[0] = 1
+        node_tree.inputs["Reflection Inner Filter"].default_value[1] = 1
+        node_tree.inputs["Reflection Inner Filter"].default_value[2] = 1
+        node_tree.inputs["Reflection Inner Filter"].default_value[3] = 1
+        node_tree.inputs["Reflection Outer Filter"].default_value[0] = 1
+        node_tree.inputs["Reflection Outer Filter"].default_value[1] = 1
+        node_tree.inputs["Reflection Outer Filter"].default_value[2] = 1
+        node_tree.inputs["Reflection Outer Filter"].default_value[3] = 1
         node_tree.inputs["Diffuse Gain"].default_value = 1
-        node_tree.inputs["Iro Inner Filter"].default_value[0] = 1
-        node_tree.inputs["Iro Inner Filter"].default_value[1] = 1
-        node_tree.inputs["Iro Inner Filter"].default_value[2] = 1
-        node_tree.inputs["Iro Inner Filter"].default_value[3] = 1
-        node_tree.inputs["Iro Outer Filter"].default_value[0] = 1
-        node_tree.inputs["Iro Outer Filter"].default_value[1] = 1
-        node_tree.inputs["Iro Outer Filter"].default_value[2] = 1
-        node_tree.inputs["Iro Outer Filter"].default_value[3] = 1
+        node_tree.inputs["Diffuse Inner Filter"].default_value[0] = 1
+        node_tree.inputs["Diffuse Inner Filter"].default_value[1] = 1
+        node_tree.inputs["Diffuse Inner Filter"].default_value[2] = 1
+        node_tree.inputs["Diffuse Inner Filter"].default_value[3] = 1
+        node_tree.inputs["Diffuse Outer Filter"].default_value[0] = 1
+        node_tree.inputs["Diffuse Outer Filter"].default_value[1] = 1
+        node_tree.inputs["Diffuse Outer Filter"].default_value[2] = 1
+        node_tree.inputs["Diffuse Outer Filter"].default_value[3] = 1
         node_tree.inputs["Post Vertex Color"].default_value = 0
         node_tree.inputs["Post Gain"].default_value = 1
         node_tree.inputs["Post Hemi Filter"].default_value[0] = 0
