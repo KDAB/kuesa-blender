@@ -1,6 +1,10 @@
 # Kuesa exporter and tools for Blender
 
-The Kuesa exporter for Blender provides:
+These instructions apply only if you are planning to use Blender 2.79
+
+From Blender 2.80 onward, the glTF exporter provided with Blender is to be used.
+
+The Kuesa exporter for Blender 2.79 provides:
 
 * glTF 2 export
 * Kuesa compatible PBR Materials export
