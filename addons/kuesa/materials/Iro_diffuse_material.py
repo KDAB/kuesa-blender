@@ -111,9 +111,9 @@ class IroDiffuse(bpy.types.ShaderNodeCustomGroup):
 
         diffuse_multiply_filter = node_tree.nodes.new("ShaderNodeVectorMath")
         diffuse_multiply_filter.operation = 'MULTIPLY'
-        diffuse_multiply_filter.inputs[1].default_value[0] = 0
-        diffuse_multiply_filter.inputs[1].default_value[1] = 0
-        diffuse_multiply_filter.inputs[1].default_value[2] = 0
+        diffuse_multiply_filter.inputs[1].default_value[0] = 1
+        diffuse_multiply_filter.inputs[1].default_value[1] = 1
+        diffuse_multiply_filter.inputs[1].default_value[2] = 1
         diffuse_multiply_filter.name = "DiffuseMultiply"
 
         env_gain_vector_node = node_tree.nodes.new("ShaderNodeCombineXYZ")
